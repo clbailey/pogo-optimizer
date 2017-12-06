@@ -1,0 +1,24 @@
+#evolution-view
+    .ui.container
+        table.ui.celled.table.inverted
+            thead
+                tr
+                    th Name
+                    th.center Cost
+                    th.center Count
+                    th.center Candy
+                    th.center(title="Evolutions without transferring anything") Evos
+                    th.center(title="Evolutions if you transfer your extra Pokemon, excluding re-trading evolved Pokemon") Evos+
+                    th.center(title="How many Pokemon you can transfer safely") Xfers
+            tbody
+                tr(ng-repeat="candy in $root.inventory.candy | orderBy: '-candy' track by candy.family_id" ng-show="candy.cost")
+                    td
+                        h4.ui.image.header
+                            img.ui.mini.rounded.image(ng-src="{{'assets/img/icons/' + candy.id + '.png'}}")
+                            .content.name {{formatName(candy.family_id)}}
+                    td.center(ng-bind="candy.cost")
+                    td.center {{getPokemonCount(candy.family_id)}}
+                    td.center(ng-bind="candy.candy")
+                    td.center {{getEvolutions(candy)}}
+                    td.center {{getEvolutions(candy, true)}}
+                    td.center {{getTransfers(candy)}}
